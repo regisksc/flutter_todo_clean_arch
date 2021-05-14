@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "831397524349",
+    "project_id": "flutter-todo-ca",
+    "storage_bucket": "flutter-todo-ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831397524349:android:fdaadfee3ca04f6e0f1214",
+        "android_client_info": {
+          "package_name": "br.com.klabs.todo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831397524349-h2qij0e6ktd3mu9oqjg2cgmqun8qn1t7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA03T4wS6ov1JYepj81dXNpIkoXLhhk340"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831397524349-h2qij0e6ktd3mu9oqjg2cgmqun8qn1t7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "831397524349-e733opaoptgscbne824qkvb1lrm4ahja.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.klabs.todo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
