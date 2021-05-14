@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_todo_clean_arch">
+    package="br.com.klabs.todo">
    <application
         android:label="flutter_todo_clean_arch"
         android:icon="@mipmap/ic_launcher">

@@ -1,4 +1,4 @@
-package com.example.flutter_todo_clean_arch
+package br.com.klabs.todo
 
 import io.flutter.embedding.android.FlutterActivity
 
