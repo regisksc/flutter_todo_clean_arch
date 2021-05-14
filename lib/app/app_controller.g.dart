@@ -34,13 +34,11 @@ mixin _$AppController on _AppControllerBase, Store {
     });
   }
 
-  final _$_AppControllerBaseActionController =
-      ActionController(name: '_AppControllerBase');
+  final _$_AppControllerBaseActionController = ActionController(name: '_AppControllerBase');
 
   @override
   void increment() {
-    final _$actionInfo = _$_AppControllerBaseActionController.startAction(
-        name: '_AppControllerBase.increment');
+    final _$actionInfo = _$_AppControllerBaseActionController.startAction(name: '_AppControllerBase.increment');
     try {
       return super.increment();
     } finally {

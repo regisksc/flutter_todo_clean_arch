@@ -23,5 +23,5 @@ abstract class RoutingAdapter {
     required String route,
     Object? args,
   }) async =>
-      Modular.to.pushNamedAndRemoveUntil(route, (_) => true);
+      Modular.to.pushNamedAndRemoveUntil(route, (_) => true, arguments: args);
 }

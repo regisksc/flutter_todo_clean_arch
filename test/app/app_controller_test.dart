@@ -1,7 +1,7 @@
 import 'package:flutter_modular_test/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_todo_clean_arch/app/main/app_module.dart';
+import 'package:flutter_todo_clean_arch/app/app_module.dart';
 
 void main() {
   initModule(AppModule());
