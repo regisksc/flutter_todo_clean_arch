@@ -1,0 +1,2 @@
+lib/app/lib/pages/auth_service.dart
+test/app/lib/pages/auth_service_test.dart
