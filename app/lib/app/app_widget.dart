@@ -4,10 +4,8 @@ import 'package:presentation/design/design.dart';
 
 class AppWidget extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Clean Architecture toDo App',
-      initialRoute: "/auth",
-    ).modular();
-  }
+  Widget build(BuildContext context) => const MaterialApp(
+        title: 'Flutter Clean Architecture toDo App',
+        initialRoute: '/auth',
+      ).modular();
 }
