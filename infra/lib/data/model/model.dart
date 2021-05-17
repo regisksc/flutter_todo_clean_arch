@@ -1,1 +1,1 @@
-export './model_abstraction.dart';
+export 'model_abstraction.dart';

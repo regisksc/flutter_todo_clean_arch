@@ -1,1 +1,2 @@
-export './model/model.dart';
+export 'datasources/datasources.dart';
+export 'model/model.dart';
