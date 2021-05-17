@@ -12,7 +12,8 @@ abstract class Fonts {
   static final headline3 = rubik.copyWith(color: AppColors.white, fontSize: 12);
   static final hint = rubik.copyWith(color: AppColors.grey3, fontSize: 20, fontWeight: FontWeight.w400);
   static final fieldText = rubik.copyWith(color: AppColors.grey2, fontSize: 20, fontWeight: FontWeight.bold);
-  static final button = rubik.copyWith(color: AppColors.white, fontSize: 18);
+  static final button =
+      rubik.copyWith(color: AppColors.white, fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: 0.9);
   static final time = rubik.copyWith(color: AppColors.grey5, fontSize: 11);
   static final footer = openSans.copyWith(fontSize: 17);
 }

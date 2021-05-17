@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:presentation/components/atoms/button_widget.dart';
 import 'package:presentation/components/atoms/field_widget.dart';
 import '../../presentation.dart';
 
@@ -19,6 +20,10 @@ class _AuthPageState extends State<AuthPage> {
         Text('Login', style: Fonts.headline1).center,
         FieldWidget(hintText: 'e-mail', onChanged: () {}),
         FieldWidget(hintText: 'password', onChanged: () {}),
+        ButtonWidget(
+          label: 'Login',
+          onTap: () {},
+        ),
       ],
     ).withNotchAvoider(context);
   }
