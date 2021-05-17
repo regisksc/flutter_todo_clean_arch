@@ -6,6 +6,7 @@ mixin NumUtils {
     double maxPercentageWidth,
     double maxNumericalWidth,
   ) {
+    assert(maxPercentageWidth >= 0 && maxPercentageWidth <= 1);
     final width = MediaQuery.of(context).size.width;
     final double calculatedMaxPercentageWidth = width * maxPercentageWidth;
     return maxPercentageWidth < maxNumericalWidth ? calculatedMaxPercentageWidth : maxNumericalWidth;

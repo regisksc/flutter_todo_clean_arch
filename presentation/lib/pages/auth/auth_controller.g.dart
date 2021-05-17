@@ -9,18 +9,18 @@ part of 'auth_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AuthController on AuthControllerBase, Store {
-  final _$valueAtom = Atom(name: 'AuthControllerBase.value');
+  final _$signStateAtom = Atom(name: 'AuthControllerBase.signState');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  SignState get signState {
+    _$signStateAtom.reportRead();
+    return super.signState;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set signState(SignState value) {
+    _$signStateAtom.reportWrite(value, super.signState, () {
+      super.signState = value;
     });
   }
 
@@ -28,11 +28,11 @@ mixin _$AuthController on AuthControllerBase, Store {
       ActionController(name: 'AuthControllerBase');
 
   @override
-  void increment() {
+  void changeSignState() {
     final _$actionInfo = _$AuthControllerBaseActionController.startAction(
-        name: 'AuthControllerBase.increment');
+        name: 'AuthControllerBase.changeSignState');
     try {
-      return super.increment();
+      return super.changeSignState();
     } finally {
       _$AuthControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +41,7 @@ mixin _$AuthController on AuthControllerBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+signState: ${signState}
     ''';
   }
 }

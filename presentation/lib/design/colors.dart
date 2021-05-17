@@ -12,6 +12,7 @@ class AppColors {
   static const grey3 = Color(0xffACABAB);
   static const grey4 = Color(0xffCFCFCF);
   static const grey5 = Color(0xffc6c6c8);
+  static const blueGrey = Color(0xff82A0B7);
   static const purple1 = Color(0xff554E8F);
   static const purple2 = Color(0xff8B87B3);
   static const buttonGradient = LinearGradient(colors: [primaryBlue, primaryBlueLight]);

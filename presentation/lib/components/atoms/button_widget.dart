@@ -16,9 +16,10 @@ class ButtonWidget extends StatelessWidget with NumUtils {
     final borderRadius = BorderRadius.circular(5);
     return ElevatedButton(
       onPressed: onTap,
-      style: ButtonStyle(
-        elevation: MaterialStateProperty.all<double>(10),
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+      style: ElevatedButton.styleFrom(
+        onPrimary: AppColors.primaryBlueLight,
+        elevation: 10,
+        padding: EdgeInsets.zero,
       ),
       child: ClipRRect(
         borderRadius: borderRadius,
