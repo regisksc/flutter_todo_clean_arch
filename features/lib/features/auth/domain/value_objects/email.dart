@@ -1,7 +1,6 @@
-import 'package:equatable/equatable.dart';
-import 'package:infra/domain/domain.dart';
-import 'package:multiple_result/multiple_result.dart';
-import 'package:rules/rules.dart';
+import 'package:infra/infra.dart';
+
+import '../../auth.dart';
 
 class Email extends ValueObject<String> {
   @override

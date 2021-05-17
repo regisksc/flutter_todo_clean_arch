@@ -1,6 +1,7 @@
+import 'package:infra/infra.dart';
 import 'package:rules/rules.dart';
 
-import '../../infra.dart';
+import '../../auth.dart';
 
 class Password extends ValueObject<String> {
   @override
