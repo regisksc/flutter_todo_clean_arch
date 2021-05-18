@@ -9,6 +9,14 @@ part of 'auth_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AuthController on AuthControllerBase, Store {
+  Computed<String>? _$actionTitleComputed;
+
+  @override
+  String get actionTitle =>
+      (_$actionTitleComputed ??= Computed<String>(() => super.actionTitle,
+              name: 'AuthControllerBase.actionTitle'))
+          .value;
+
   final _$signStateAtom = Atom(name: 'AuthControllerBase.signState');
 
   @override
@@ -41,7 +49,8 @@ mixin _$AuthController on AuthControllerBase, Store {
   @override
   String toString() {
     return '''
-signState: ${signState}
+signState: ${signState},
+actionTitle: ${actionTitle}
     ''';
   }
 }

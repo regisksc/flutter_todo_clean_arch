@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../presentation.dart';
 
 class ButtonWidget extends StatelessWidget with NumUtils {
-  final String label;
-  final Function() onTap;
-
   const ButtonWidget({
     required this.label,
     required this.onTap,
     Key? key,
   }) : super(key: key);
+  final String label;
+  final Function() onTap;
+
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(5);

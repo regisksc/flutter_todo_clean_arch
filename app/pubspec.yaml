@@ -32,6 +32,8 @@ environment:
 dependencies:
   presentation:
     path: ../presentation
+  infra:
+    path: ../infra
   flutter_mobx: ^2.0.0
   mobx: ^2.0.1
   flutter_modular: ^3.2.1

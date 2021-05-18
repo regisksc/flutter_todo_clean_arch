@@ -10,8 +10,11 @@ abstract class AuthControllerBase with Store {
   @observable
   SignState signState = SignState.isSignIn;
   @action
-  void changeSignState() {
-    if (signState == SignState.isSignIn) signState = SignState.isSignUp;
-    if (signState == SignState.isSignUp) signState = SignState.isSignIn;
-  }
+  void changeSignState() =>
+      signState == SignState.isSignIn ? signState = SignState.isSignUp : signState = SignState.isSignIn;
+
+  @computed
+  String get actionTitle => signState == SignState.isSignIn ? 'Login' : 'Register';
+
+  final animDuration = const Duration(milliseconds: 400);
 }

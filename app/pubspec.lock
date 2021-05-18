@@ -292,7 +292,7 @@ packages:
     source: hosted
     version: "4.0.0"
   infra:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "../infra"
       relative: true
@@ -473,6 +473,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  rules:
+    dependency: transitive
+    description:
+      name: rules
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   rxdart:
     dependency: transitive
     description:

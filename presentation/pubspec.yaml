@@ -19,6 +19,8 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  responsive_framework: ^0.1.0
+  flutter_mobx: ^2.0.0
   mobx: ^2.0.1
   flutter_modular: ^3.2.1
   google_fonts: ^2.0.0

@@ -219,7 +219,6 @@ analyzer:
     empty_constructor_bodies: error
     empty_statements: error
     file_names: error
-    flutter_style_todos: error
     hash_and_equals: error
     implementation_imports: error
     invariant_booleans: error
