@@ -10,6 +10,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  multiple_result: ^1.0.3
   rules: ^2.0.0
   infra:
     path: ../infra
@@ -17,6 +18,8 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  faker: ^2.0.0-rc.2
+  mocktail: ^0.1.2
   flutter_test:
     sdk: flutter
 
