@@ -8,7 +8,7 @@ class Password extends ValueObject<String> {
   final Result<ValueFailure<String>, String> value;
 
   factory Password(String input) {
-    const oneUpperAndLowerCharAndDigit = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~])';
+    const oneUpperAndLowerCharAndDigit = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])';
     final rule = Rule(
       input,
       name: 'Password',

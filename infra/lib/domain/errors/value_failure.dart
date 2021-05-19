@@ -1,5 +1,7 @@
-abstract class ValueFailure<T> {
+import '../domain.dart';
+
+abstract class ValueFailure<T> extends Failure {
   final T value;
   final String message;
-  ValueFailure(this.value, this.message);
+  const ValueFailure(this.value, this.message) : super(description: message);
 }

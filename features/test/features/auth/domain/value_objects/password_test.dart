@@ -7,10 +7,8 @@ void main() {
     () async {
       // arrange
       final input = 'Ab123456';
-
       // act
       final valueObject = Password(input);
-
       // assert
       final internalValue = valueObject.value.get();
       expect(internalValue, isA<String>());

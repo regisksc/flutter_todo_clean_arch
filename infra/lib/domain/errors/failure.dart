@@ -1,4 +1,6 @@
-abstract class Failure {
+import '../../infra.dart';
+
+abstract class Failure extends Equatable {
   final String description;
-  Failure({required this.description});
+  const Failure({required this.description});
 }
