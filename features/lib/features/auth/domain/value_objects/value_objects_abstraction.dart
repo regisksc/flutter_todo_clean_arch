@@ -11,7 +11,7 @@ abstract class ValueObject<T> implements Validatable {
 
   T getOrElse(T defaultValue) {
     final content = value.get();
-    if (content.isSuccess()) return content as T;
+    if (value.isSuccess()) return content as T;
     return defaultValue;
   }
 
