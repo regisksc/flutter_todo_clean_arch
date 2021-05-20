@@ -10,6 +10,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  uuid: ^3.0.4
   firebase_auth: ^1.2.0
   cloud_firestore: ^2.2.0
   multiple_result: ^1.0.3

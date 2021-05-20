@@ -20,7 +20,11 @@ void main() {
     name = faker.person.name();
     email = Email(faker.internet.email());
     password = Password('Ab123456');
-    user = UserEntity(name: 'Regis Kian', email: email);
+    user = UserEntity(
+      userId: UserId(input: UuidFactory.newUuid),
+      name: 'Regis Kian',
+      email: email,
+    );
     failure = FailureMock();
   });
 

@@ -1,6 +1,8 @@
+import 'package:features/features/auth/domain/value_objects/user_id.dart';
 import 'package:features/features/features.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:infra/exports/dependencies.dart';
+import 'package:infra/infra.dart';
 
 void main() {
   test(
@@ -8,6 +10,7 @@ void main() {
     () async {
       // arrange
       final user = UserEntity(
+        userId: UserId(input: UuidFactory.newUuid),
         name: faker.person.name(),
         email: Email(faker.internet.email()),
       );
