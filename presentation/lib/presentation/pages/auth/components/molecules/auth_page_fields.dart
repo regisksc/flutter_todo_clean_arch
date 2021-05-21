@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infra/infra.dart';
 
-import '../../../../presentation.dart';
+import '../../../../../presentation.dart';
 
 class AuthPageFields extends StatelessWidget {
   AuthPageFields({Key? key, required this.pageSize, required this.isSignIn}) : super(key: key);

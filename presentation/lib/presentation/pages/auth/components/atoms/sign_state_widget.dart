@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:infra/infra.dart';
 
+import '../../../../../presentation.dart';
 import '../../../../design/design.dart';
-import '../../../../presentation.dart';
 
 class SignStateFooter extends StatelessWidget {
   SignStateFooter.signIn() {

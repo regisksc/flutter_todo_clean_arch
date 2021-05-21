@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infra/infra.dart';
-import '../../presentation.dart';
+import '../../../presentation.dart';
 
 class AuthPage extends StatefulWidget {
   @override
