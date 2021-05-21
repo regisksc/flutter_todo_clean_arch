@@ -2,9 +2,7 @@ import 'package:infra/infra.dart';
 
 import '../../auth.dart';
 
-class UserId {
-  // This value object never fails to instantiate
-  // Therefore it's unnecessary to extend the value object abstraction
+class UserId extends ValueObject<String> {
   UserId._(this.value);
   @override
   final Result<ValueFailure<String>, String> value;

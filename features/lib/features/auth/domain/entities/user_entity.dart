@@ -1,5 +1,4 @@
 import 'package:features/features/auth/domain/value_objects/user_id.dart';
-import 'package:infra/exports/dependencies.dart';
 import 'package:infra/infra.dart';
 
 import '../../auth.dart';

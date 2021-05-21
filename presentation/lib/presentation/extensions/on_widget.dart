@@ -21,7 +21,7 @@ extension WidgetExtensions on Widget {
         ) /* .responsive(context) */,
       );
 
-  Widget get center => Align(alignment: const Alignment(0, 0), child: this);
+  Widget get center => Center(child: this);
   Widget get left => Align(alignment: const Alignment(-1, 0), child: this);
   Widget get right => Align(alignment: const Alignment(1, 0), child: this);
 }

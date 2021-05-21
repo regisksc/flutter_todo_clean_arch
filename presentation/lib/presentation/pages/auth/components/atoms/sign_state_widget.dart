@@ -43,7 +43,7 @@ class SignStateFooter extends StatelessWidget {
     );
   }
 
-  String get signInStateDescription => 'Don\'t have an account?';
+  String get signInStateDescription => "Don't have an account?";
   String get signInAction => 'Sign up';
   String get signUpStateDescription => 'Already have an account?';
   String get signUpAction => 'Sign in';
