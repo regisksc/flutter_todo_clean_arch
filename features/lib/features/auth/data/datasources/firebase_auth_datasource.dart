@@ -4,13 +4,14 @@ import 'package:infra/infra.dart';
 import '../../auth.dart';
 
 class FirebaseAuthDatasource implements AuthDataSource {
-  final FirebaseAuth firebase;
-  FirebaseAuthDatasource(this.firebase);
+  final FirebaseAuth auth;
+  final FirebaseFirestore store;
+  FirebaseAuthDatasource({required this.auth, required this.store});
 
   @override
-  Future<Result<Failure, UserModel>> login(Email email, Password password) async {
+  Future<Result<Failure, UserModel>> login({required Email email, required Password password}) async {
     try {
-      final signInCall = firebase.signInWithEmailAndPassword(
+      final signInCall = auth.signInWithEmailAndPassword(
         email: email.getOrElse(''),
         password: password.getOrElse(''),
       );
@@ -26,13 +27,13 @@ class FirebaseAuthDatasource implements AuthDataSource {
   }
 
   @override
-  Future<Result<Failure, UserModel>> register(
-    String name,
-    Email email,
-    Password password,
-  ) async {
+  Future<Result<Failure, UserModel>> register({
+    required String name,
+    required Email email,
+    required Password password,
+  }) async {
     try {
-      final signInCall = firebase.createUserWithEmailAndPassword(
+      final signInCall = auth.createUserWithEmailAndPassword(
         email: email.getOrElse(''),
         password: password.getOrElse(''),
       );
@@ -45,5 +46,13 @@ class FirebaseAuthDatasource implements AuthDataSource {
     } on FirebaseAuthException catch (e) {
       return Error(FirebaseAuthFailure(e));
     }
+  }
+
+  @override
+  Future<bool> saveUserDataAfterRegistering({required UserModel user}) async {
+    final collection = store.collection('users');
+    final document = collection.doc(user.userId);
+    final saveDataCall = document.set(user.toJson);
+    return saveDataCall.then((_) => true).catchError((_, __) => false);
   }
 }

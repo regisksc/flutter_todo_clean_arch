@@ -6,8 +6,9 @@ class ConcreteAuthRepository implements AuthRepository {
 
   ConcreteAuthRepository(this.datasource);
   @override
-  Future<Result<Failure, UserEntity>> logUserIn({required Email email, required Password password}) {
+  Future<Result<Failure, UserEntity>> logUserIn({required Email email, required Password password}) async {
     throw UnimplementedError();
+    // return Success(UserEntity(email: email, name: '', userId: null));
   }
 
   @override
@@ -15,7 +16,8 @@ class ConcreteAuthRepository implements AuthRepository {
     required String name,
     required Email email,
     required Password password,
-  }) {
+  }) async {
     throw UnimplementedError();
+    // return Success(UserEntity(email: email, name: name));
   }
 }

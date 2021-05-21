@@ -2,14 +2,24 @@ import 'package:features/features/auth/data/error/auth_firebase_errors.dart';
 import 'package:features/features/features.dart';
 import 'package:infra/infra.dart';
 
-class FirebaseMock extends Mock implements FirebaseAuth {}
+class AuthMock extends Mock implements FirebaseAuth {}
+
+class FirestoreMock extends Mock implements FirebaseFirestore {}
+
+// ignore: subtype_of_sealed_class
+class CollectionReferenceMock extends Mock implements CollectionReference<Map<String, dynamic>> {}
+
+class DocumentReferenceMock extends Mock implements DocumentReference<Map<String, dynamic>> {}
 
 class UserCredentialMock extends Mock implements UserCredential {}
 
 class FirebaseAuthExceptionMock extends Mock implements FirebaseAuthException {}
 
 void main() {
-  late FirebaseAuth firebase;
+  late FirebaseAuth auth;
+  late FirebaseFirestore store;
+  late CollectionReferenceMock collection;
+  late DocumentReferenceMock document;
   late AuthDataSource sut;
   late Email email;
   late Password password;
@@ -18,14 +28,17 @@ void main() {
   late FirebaseAuthExceptionMock exception;
   late String name;
   setUp(() {
-    firebase = FirebaseMock();
-    sut = FirebaseAuthDatasource(firebase);
+    auth = AuthMock();
+    store = FirestoreMock();
+    collection = CollectionReferenceMock();
+    document = DocumentReferenceMock();
+    sut = FirebaseAuthDatasource(auth: auth, store: store);
     email = Email(faker.internet.email());
     password = Password('Ab123456');
     name = faker.person.name();
     userCredential = UserCredentialMock();
     exception = FirebaseAuthExceptionMock();
-    user = UserModel(name: 'Regis Kian', email: email.getOrElse(''));
+    user = UserModel(userId: faker.guid.guid(), name: 'Regis Kian', email: email.getOrElse(''));
   });
 
   group('sign in', () {
@@ -34,16 +47,16 @@ void main() {
       () async {
         // arrange
         when(
-          () => firebase.signInWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
+          () => auth.signInWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
         ).thenAnswer((_) async => userCredential);
         // act
-        final result = await sut.login(email, password);
+        final result = await sut.login(email: email, password: password);
         // assert
         verify(
-          () => firebase.signInWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
+          () => auth.signInWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
         );
         expect(result, isA<Success<Failure, UserModel>>());
-        verifyNoMoreInteractions(firebase);
+        verifyNoMoreInteractions(auth);
       },
     );
 
@@ -52,16 +65,16 @@ void main() {
       () async {
         // arrange
         when(
-          () => firebase.signInWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
+          () => auth.signInWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
         ).thenThrow(exception);
         // act
-        final result = await sut.login(email, password);
+        final result = await sut.login(email: email, password: password);
         // assert
         verify(
-          () => firebase.signInWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
+          () => auth.signInWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
         );
         expect(result.get(), isA<FirebaseAuthFailure>());
-        verifyNoMoreInteractions(firebase);
+        verifyNoMoreInteractions(auth);
       },
     );
   });
@@ -72,16 +85,16 @@ void main() {
       () async {
         // arrange
         when(
-          () => firebase.createUserWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
+          () => auth.createUserWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
         ).thenAnswer((_) async => userCredential);
         // act
-        final result = await sut.register(name, email, password);
+        final result = await sut.register(name: name, email: email, password: password);
         // assert
         verify(
-          () => firebase.createUserWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
+          () => auth.createUserWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
         );
         expect(result, isA<Success<Failure, UserModel>>());
-        verifyNoMoreInteractions(firebase);
+        verifyNoMoreInteractions(auth);
       },
     );
 
@@ -90,16 +103,48 @@ void main() {
       () async {
         // arrange
         when(
-          () => firebase.createUserWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
+          () => auth.createUserWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
         ).thenThrow(exception);
         // act
-        final result = await sut.register(name, email, password);
+        final result = await sut.register(name: name, email: email, password: password);
         // assert
         verify(
-          () => firebase.createUserWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
+          () => auth.createUserWithEmailAndPassword(email: email.getOrElse(''), password: password.getOrElse('')),
         );
         expect(result.get(), isA<FirebaseAuthFailure>());
-        verifyNoMoreInteractions(firebase);
+        verifyNoMoreInteractions(auth);
+      },
+    );
+
+    test(
+      'should send user data to store after signing up and return true on success',
+      () async {
+        // arrange
+        when(() => store.collection('users')).thenReturn(collection);
+        when(() => collection.doc(any())).thenReturn(document);
+        when(() => document.set(any())).thenAnswer((_) => Future.value(null));
+        // act
+        final result = await sut.saveUserDataAfterRegistering(user: user);
+        // assert
+        verify(() => store.collection('users').doc(any()).set(any()));
+        expect(result, isTrue);
+        verifyNoMoreInteractions(store);
+      },
+    );
+
+    test(
+      'should send user data to store after signing up and throw on error',
+      () async {
+        // arrange
+        when(() => store.collection('users')).thenReturn(collection);
+        when(() => collection.doc(any())).thenReturn(document);
+        when(() => document.set(any())).thenThrow(Exception());
+        // act
+        final result = sut.saveUserDataAfterRegistering(user: user);
+        // assert
+        expect(() => result, throwsA(isA<Exception>()));
+        verify(() => store.collection('users').doc(any()).set(any()));
+        verifyNoMoreInteractions(store);
       },
     );
   });

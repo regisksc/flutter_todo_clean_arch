@@ -3,14 +3,18 @@ import 'package:infra/infra.dart';
 import '../../auth.dart';
 
 abstract class AuthDataSource {
-  Future<Result<Failure, UserModel>> register(
-    String name,
-    Email email,
-    Password password,
-  );
+  Future<Result<Failure, UserModel>> register({
+    required String name,
+    required Email email,
+    required Password password,
+  });
 
-  Future<Result<Failure, UserModel>> login(
-    Email email,
-    Password password,
-  );
+  Future<bool> saveUserDataAfterRegistering({
+    required UserModel user,
+  });
+
+  Future<Result<Failure, UserModel>> login({
+    required Email email,
+    required Password password,
+  });
 }

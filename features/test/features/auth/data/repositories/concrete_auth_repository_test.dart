@@ -25,11 +25,11 @@ main() {
     'should login and return a UserEntity on success',
     () async {
       // arrange
-      when(() => datasource.login(email, password)).thenAnswer((_) async => Success(model));
+      when(() => datasource.login(email: email, password: password)).thenAnswer((_) async => Success(model));
       // act
       final result = await sut.logUserIn(email: email, password: password);
-
       // assert
+      // expect(result, isA<UserEntity>());
     },
   );
 }
