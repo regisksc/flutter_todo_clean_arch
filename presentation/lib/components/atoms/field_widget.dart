@@ -17,7 +17,7 @@ class FieldWidget extends StatelessWidget with NumUtils {
 
   @override
   Widget build(BuildContext context) => Container(
-        height: 35,
+        height: WidgetConsts.fieldHeight,
         constraints: BoxConstraints(
           minWidth: 200,
           maxWidth: getMaxWidth(context, 0.85, 400),

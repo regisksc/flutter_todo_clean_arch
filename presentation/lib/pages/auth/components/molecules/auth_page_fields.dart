@@ -11,7 +11,7 @@ class AuthPageFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final oneFieldSpace = pageSize.height * 0.03 + 35;
+    final oneFieldSpace = pageSize.height * 0.03 + WidgetConsts.fieldHeight;
     return SizedBox(
       height: oneFieldSpace * 4,
       child: Column(
