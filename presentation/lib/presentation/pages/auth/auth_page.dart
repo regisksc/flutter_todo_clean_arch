@@ -46,13 +46,4 @@ class _AuthPageState extends State<AuthPage> {
       ],
     ).withNotchAvoider(context);
   }
-
-  // AnimatedSwitcher _switcher(Size pageSize) {
-  //   return AnimatedSwitcher(
-  //     duration: const Duration(milliseconds: 400),
-  //     child: controller.signState == SignState.isSignIn
-  //         ? SignInPageStructure(pageSize: pageSize)
-  //         : SignUpPageStructure(pageSize: pageSize),
-  //   );
-  // }
 }
