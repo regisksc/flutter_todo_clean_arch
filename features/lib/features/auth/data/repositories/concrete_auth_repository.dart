@@ -24,11 +24,9 @@ class ConcreteAuthRepository implements AuthRepository {
     final user = await datasource.register(email: email, password: password, name: name);
     return user.when(
       (error) => Error(error),
-      (user) async {
-        return await datasource.saveUserDataAfterRegistering(user: user)
-            ? Success(user.toEntity)
-            : Error(FirebaseAuthFailure());
-      },
+      (user) async => await datasource.saveUserDataAfterRegistering(user: user)
+          ? Success(user.toEntity)
+          : Error(FirebaseAuthFailure()),
     );
   }
 }
