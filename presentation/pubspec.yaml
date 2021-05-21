@@ -24,8 +24,11 @@ dependencies:
   mobx: ^2.0.1
   flutter_modular: ^3.2.1
   google_fonts: ^2.0.0
+
   infra:
     path: ../infra
+  features:
+    path: ../features
   flutter:
     sdk: flutter
 
