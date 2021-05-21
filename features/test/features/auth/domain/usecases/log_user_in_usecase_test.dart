@@ -1,9 +1,9 @@
 import 'package:features/features/auth/domain/domain.dart';
 import 'package:infra/infra.dart';
 
-class AuthRepositoryMock extends Mock implements AuthRepository {}
+import '../../../../utils/mocks/shared_mocks.dart';
 
-class FailureMock extends Mock implements Failure {}
+class AuthRepositoryMock extends Mock implements AuthRepository {}
 
 void main() {
   late AuthRepositoryMock repository;

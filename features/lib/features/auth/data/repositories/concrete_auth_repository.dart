@@ -1,3 +1,4 @@
+import 'package:features/features/auth/data/error/auth_firebase_errors.dart';
 import 'package:features/features/features.dart';
 import 'package:infra/infra.dart';
 
@@ -7,8 +8,11 @@ class ConcreteAuthRepository implements AuthRepository {
   ConcreteAuthRepository(this.datasource);
   @override
   Future<Result<Failure, UserEntity>> logUserIn({required Email email, required Password password}) async {
-    throw UnimplementedError();
-    // return Success(UserEntity(email: email, name: '', userId: null));
+    final user = await datasource.login(email: email, password: password);
+    return user.when(
+      (error) => Error(error),
+      (success) => Success(success.toEntity),
+    );
   }
 
   @override
@@ -17,7 +21,14 @@ class ConcreteAuthRepository implements AuthRepository {
     required Email email,
     required Password password,
   }) async {
-    throw UnimplementedError();
-    // return Success(UserEntity(email: email, name: name));
+    final user = await datasource.register(email: email, password: password, name: name);
+    return user.when(
+      (error) => Error(error),
+      (user) async {
+        return await datasource.saveUserDataAfterRegistering(user: user)
+            ? Success(user.toEntity)
+            : Error(FirebaseAuthFailure());
+      },
+    );
   }
 }
