@@ -16,10 +16,13 @@ class FirebaseAuthDatasource implements AuthDataSource {
         password: password.getOrElse(''),
       );
       return signInCall.then(
-        (user) => Success(UserModel(
-          email: email.getOrElse(''),
-          name: user.additionalUserInfo?.username,
-        )),
+        (user) => Success(
+          UserModel(
+            userId: UuidFactory.newUuid,
+            email: user.user!.email,
+            name: user.additionalUserInfo?.username,
+          ),
+        ),
       );
     } on FirebaseAuthException catch (e) {
       return Error(FirebaseAuthFailure(e));
@@ -38,10 +41,13 @@ class FirebaseAuthDatasource implements AuthDataSource {
         password: password.getOrElse(''),
       );
       return signInCall.then(
-        (user) => Success(UserModel(
-          email: email.getOrElse(''),
-          name: user.additionalUserInfo?.username,
-        )),
+        (user) => Success(
+          UserModel(
+            userId: UuidFactory.newUuid,
+            email: email.getOrElse(''),
+            name: user.additionalUserInfo?.username,
+          ),
+        ),
       );
     } on FirebaseAuthException catch (e) {
       return Error(FirebaseAuthFailure(e));
