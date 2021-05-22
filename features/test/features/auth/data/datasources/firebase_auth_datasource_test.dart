@@ -1,5 +1,5 @@
 import 'package:features/features/auth/data/error/auth_firebase_errors.dart';
-import 'package:features/features/features.dart';
+import 'package:features/features.dart';
 import 'package:infra/infra.dart';
 
 class AuthMock extends Mock implements FirebaseAuth {}

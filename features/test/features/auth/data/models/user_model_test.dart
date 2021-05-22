@@ -1,4 +1,4 @@
-import 'package:features/features/features.dart';
+import 'package:features/features.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

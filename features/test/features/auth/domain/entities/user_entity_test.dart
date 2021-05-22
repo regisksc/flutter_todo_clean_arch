@@ -1,5 +1,5 @@
 import 'package:features/features/auth/domain/value_objects/user_id.dart';
-import 'package:features/features/features.dart';
+import 'package:features/features.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:infra/exports/dependencies.dart';
 import 'package:infra/infra.dart';

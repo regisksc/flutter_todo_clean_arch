@@ -1,4 +1,4 @@
-import 'package:features/features/features.dart';
+import 'package:features/features.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:infra/exports/dependencies.dart';
 
