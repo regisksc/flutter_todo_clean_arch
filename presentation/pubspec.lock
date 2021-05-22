@@ -63,7 +63,7 @@ packages:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   build_runner:
     dependency: "direct dev"
     description:
@@ -128,7 +128,7 @@ packages:
     source: hosted
     version: "1.1.0"
   cloud_firestore:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
@@ -210,7 +210,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.2"
   fake_async:
     dependency: transitive
     description:
@@ -245,9 +245,9 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   firebase_auth:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: firebase_auth
       url: "https://pub.dartlang.org"
@@ -313,7 +313,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.1"
+    version: "3.2.2+1"
   flutter_modular_annotations:
     dependency: transitive
     description:
@@ -358,7 +358,7 @@ packages:
       name: google_fonts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.0"
   graphs:
     dependency: transitive
     description:
