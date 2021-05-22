@@ -2,7 +2,7 @@ import 'package:features/features/auth/domain/entities/entities.dart';
 import 'package:features/features/auth/domain/value_objects/user_id.dart';
 import 'package:infra/infra.dart';
 
-import '../../../features.dart';
+import '../../../../features.dart';
 
 class UserModel extends Model {
   final String? userId;
