@@ -1,0 +1,24 @@
+import 'package:features/features.dart';
+import 'package:flutter/material.dart';
+import 'package:infra/domain/domain.dart';
+
+import '../../../../../presentation.dart';
+
+class FieldErrorPlaceholder extends StatelessWidget {
+  const FieldErrorPlaceholder({
+    required this.failures,
+    Key? key,
+  }) : super(key: key);
+  final List<ValueFailure> failures;
+  @override
+  Widget build(BuildContext context) {
+    final failureMessage = failures.first is UninitializedField ? '' : failures.first.message;
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01),
+      child: Text(
+        failures.isEmpty ? '' : failureMessage,
+        style: Fonts.headline2.copyWith(color: AppColors.error),
+      ),
+    );
+  }
+}

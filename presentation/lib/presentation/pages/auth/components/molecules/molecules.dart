@@ -1,1 +1,1 @@
-export './auth_page_fields.dart';
+export 'auth_page_fields.dart';

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class AppColors {
@@ -15,6 +16,10 @@ class AppColors {
   static const blueGrey = Color(0xff82A0B7);
   static const purple1 = Color(0xff554E8F);
   static const purple2 = Color(0xff8B87B3);
-  static const buttonGradient = LinearGradient(colors: [primaryBlue, primaryBlueLight]);
+  static const error = Color(0xffEF5350); // Colors.redAccent.shade400
+
+  static const enabledButtonGradient = LinearGradient(colors: [primaryBlue, primaryBlueLight]);
+  static const disabledButtonGradient =
+      LinearGradient(colors: [grey3, grey4], begin: Alignment.topLeft, end: Alignment.bottomRight);
   static const appBarGradient = LinearGradient(colors: [secondaryBlue, secondaryBlueLight]);
 }

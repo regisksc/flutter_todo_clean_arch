@@ -1,3 +1,4 @@
+import 'package:features/features/auth/domain/error/error.dart';
 import 'package:flutter/material.dart';
 import 'package:infra/infra.dart';
 
@@ -9,41 +10,48 @@ class AuthPageFields extends StatelessWidget {
   final bool isSignIn;
   final controller = DiAdapter.get<AuthController>();
 
+  double get oneFieldSpace => pageSize.height * 0.03 + WidgetConsts.fieldHeight;
+
   @override
   Widget build(BuildContext context) {
-    final oneFieldSpace = pageSize.height * 0.03 + WidgetConsts.fieldHeight;
     return SizedBox(
-      height: oneFieldSpace * 4,
-      child: Column(
-        children: [
-          _signUpField(
-            isSignIn,
-            oneFieldSpace,
-            FieldWidget(hintText: 'name', onChanged: () {}),
-          ),
-          FieldWidget(hintText: 'e-mail', onChanged: () {}),
-          SizedBox(height: pageSize.height * 0.03),
-          FieldWidget(hintText: 'password', onChanged: () {}),
-          SizedBox(height: pageSize.height * 0.03),
-          _signUpField(
-            isSignIn,
-            oneFieldSpace,
-            FieldWidget(hintText: 'confirm password', onChanged: () {}),
-          ),
-        ],
+      height: oneFieldSpace * 5,
+      child: StateObserverAdapter(
+        adapteeBuilder: (_) {
+          return Column(
+            children: [
+              _signUpField(FieldWidget(hintText: 'name', onChanged: controller.setName)),
+              FieldWidget(
+                hintText: 'e-mail',
+                onChanged: controller.setEmail,
+                hasError: controller.invalidEmail,
+              ),
+              SizedBox(height: pageSize.height * 0.03),
+              FieldWidget(
+                hintText: 'password',
+                onChanged: controller.setPassword,
+                hasError: controller.password.isInvalid && controller.password.get is! UninitializedField,
+              ),
+              SizedBox(height: pageSize.height * 0.03),
+              _signUpField(FieldWidget(
+                hintText: 'confirm password',
+                onChanged: controller.setConfirmPassword,
+                hasError: controller.confirmPassword.isInvalid && controller.confirmPassword.get is! UninitializedField,
+              )),
+              FieldErrorPlaceholder(failures: controller.failures),
+            ],
+          );
+        },
       ),
     );
   }
 
-  AnimatedContainer _signUpField(bool isSignIn, double fieldSpace, FieldWidget field) {
+  AnimatedContainer _signUpField(FieldWidget field) {
     return AnimatedContainer(
       duration: controller.animDuration,
-      height: !isSignIn ? fieldSpace : 0,
+      height: !isSignIn ? oneFieldSpace : 0,
       child: Column(
-        children: [
-          field,
-          SizedBox(height: pageSize.height * 0.03),
-        ],
+        children: [field, SizedBox(height: pageSize.height * 0.03)],
       ),
     );
   }

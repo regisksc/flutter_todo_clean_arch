@@ -16,7 +16,7 @@ class _AuthPageState extends State<AuthPage> {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: pageSize.height * 0.10,
+          height: pageSize.height * 0.095,
           child: Text(
             'ToDo App',
             style: Fonts.headline1.copyWith(fontSize: 24),
@@ -32,7 +32,14 @@ class _AuthPageState extends State<AuthPage> {
                 Text(controller.actionTitle, style: Fonts.headline1).center,
                 SizedBox(height: pageSize.height * 0.05),
                 AuthPageFields(isSignIn: isSignIn, pageSize: pageSize),
-                ButtonWidget(label: controller.actionTitle, onTap: () {}),
+                Observer(
+                  builder: (context) => ButtonWidget(
+                    enable: controller.readyToProceed,
+                    label: controller.actionTitle,
+                    displayLoading: controller.pageState == PageState.loading,
+                    onTap: () => controller.handleActionTap(),
+                  ),
+                ),
                 const Spacer(),
                 AnimatedSwitcher(
                   duration: controller.animDuration,
