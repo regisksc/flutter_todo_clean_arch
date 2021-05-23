@@ -36,7 +36,7 @@ analyzer:
     avoid_returning_null_for_future: error
     avoid_returning_null_for_void: error
     avoid_returning_this: error
-    avoid_setters_without_getters: error
+    avoid_setters_without_getters: ignore
     avoid_shadowing_type_parameters: error
     avoid_single_cascade_in_expression_statements: ignore
     avoid_slow_async_io: error
@@ -1033,7 +1033,7 @@ linter:
     # Use the setter syntax
     # pedantic: disabled
     # https://dart-lang.github.io/linter/lints/use_setters_to_change_properties.html
-    - use_setters_to_change_properties
+    # - use_setters_to_change_properties
 
     # In most cases, using a string buffer is preferred for composing strings due to its improved performance.
     # https://dart-lang.github.io/linter/lints/use_string_buffers.html
