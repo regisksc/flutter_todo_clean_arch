@@ -7,7 +7,9 @@ class Email extends ValueObject<String> {
   @override
   final Result<ValueFailure<String>, String> value;
 
-  factory Email(String input) {
+  factory Email([String? input]) {
+    if (input == null) return Email._(Error(UninitializedField('e-mail')));
+    if (input == '') return Email._(Error(EmptyField('e-mail')));
     final rule = Rule(
       input,
       name: 'Email',

@@ -11,3 +11,9 @@ class InvalidPassword extends ValueFailure<String> {
   @override
   List<Object?> get props => [value, super.description];
 }
+
+class NonMatchingPasswords extends ValueFailure<String> {
+  NonMatchingPasswords() : super("", "The passwords aren't the same");
+  @override
+  List<Object?> get props => [value, super.description];
+}

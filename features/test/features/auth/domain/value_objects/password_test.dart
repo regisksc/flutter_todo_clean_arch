@@ -10,7 +10,7 @@ void main() {
       // act
       final valueObject = Password(input);
       // assert
-      final internalValue = valueObject.value.get();
+      final internalValue = valueObject.get;
       expect(internalValue, isA<String>());
     },
   );
@@ -26,7 +26,7 @@ void main() {
       // act
       valueObject = Password(input);
       // assert
-      internalValue = valueObject.value.get();
+      internalValue = valueObject.get;
       expect(internalValue, isA<InvalidPassword>());
 
       // arrange
@@ -34,7 +34,7 @@ void main() {
       // act
       valueObject = Password(input);
       // assert
-      internalValue = valueObject.value.get();
+      internalValue = valueObject.get;
       expect(internalValue, isA<InvalidPassword>());
 
       // arrange
@@ -42,7 +42,7 @@ void main() {
       // act
       valueObject = Password(input);
       // assert
-      internalValue = valueObject.value.get();
+      internalValue = valueObject.get;
       expect(internalValue, isA<InvalidPassword>());
     },
   );

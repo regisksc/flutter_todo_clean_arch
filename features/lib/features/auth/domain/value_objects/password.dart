@@ -5,9 +5,11 @@ import '../../auth.dart';
 
 class Password extends ValueObject<String> {
   @override
-  final Result<ValueFailure<String>, String> value;
+  final Result<ValueFailure<String>, String>? value;
 
-  factory Password(String input) {
+  factory Password([String? input]) {
+    if (input == null) return Password._(Error(UninitializedField('password')));
+    if (input == '') return Password._(Error(EmptyField('password')));
     const oneUpperAndLowerCharAndDigit = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])';
     final rule = Rule(
       input,
