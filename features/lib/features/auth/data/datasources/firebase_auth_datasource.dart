@@ -1,4 +1,5 @@
 import 'package:features/features/auth/data/error/auth_firebase_errors.dart';
+import 'package:flutter/services.dart';
 import 'package:infra/infra.dart';
 
 import '../../auth.dart';
@@ -10,23 +11,19 @@ class FirebaseAuthDatasource implements AuthDataSource {
 
   @override
   Future<Result<Failure, UserModel>> login({required Email email, required Password password}) async {
-    try {
-      final signInCall = auth.signInWithEmailAndPassword(
-        email: email.getOrElse(''),
-        password: password.getOrElse(''),
-      );
-      return signInCall.then(
-        (user) => Success(
-          UserModel(
-            userId: UuidFactory.newUuid,
-            email: user.user!.email,
-            name: user.additionalUserInfo?.username,
-          ),
+    final signInCall = auth.signInWithEmailAndPassword(
+      email: email.get,
+      password: password.get,
+    );
+    return signInCall.then(
+      (user) => Success(
+        UserModel(
+          userId: UuidFactory.newUuid,
+          email: user.user!.email,
+          name: user.additionalUserInfo?.username,
         ),
-      );
-    } on FirebaseAuthException catch (e) {
-      return Error(FirebaseAuthFailure(e));
-    }
+      ),
+    );
   }
 
   @override
@@ -36,21 +33,25 @@ class FirebaseAuthDatasource implements AuthDataSource {
     required Password password,
   }) async {
     try {
-      final signInCall = auth.createUserWithEmailAndPassword(
-        email: email.getOrElse(''),
-        password: password.getOrElse(''),
+      final signUpCall = auth.createUserWithEmailAndPassword(
+        email: email.get,
+        password: password.get,
       );
-      return signInCall.then(
+      return signUpCall.then(
         (user) => Success(
           UserModel(
             userId: UuidFactory.newUuid,
-            email: email.getOrElse(''),
+            email: email.get,
             name: user.additionalUserInfo?.username,
           ),
         ),
       );
-    } on FirebaseAuthException catch (e) {
-      return Error(FirebaseAuthFailure(e));
+    } on PlatformException catch (e) {
+      print(e);
+      return Error(FirebaseAuthFailure());
+    } catch (e) {
+      print(e);
+      return Error(FirebaseAuthFailure());
     }
   }
 

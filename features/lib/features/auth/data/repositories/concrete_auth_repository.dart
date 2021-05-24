@@ -8,7 +8,13 @@ class ConcreteAuthRepository implements AuthRepository {
   ConcreteAuthRepository(this.datasource);
   @override
   Future<Result<Failure, UserEntity>> logUserIn({required Email email, required Password password}) async {
-    final user = await datasource.login(email: email, password: password);
+    late Result<Failure, UserModel> user;
+    try {
+      user = await datasource.login(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') return Error(UserNotFoundFailure());
+      return Error(FirebaseAuthFailure());
+    }
     return user.when(
       (error) => Error(error),
       (success) => Success(success.toEntity),

@@ -12,11 +12,14 @@ class FieldErrorPlaceholder extends StatelessWidget {
   final List<ValueFailure> failures;
   @override
   Widget build(BuildContext context) {
-    final failureMessage = failures.first is UninitializedField ? '' : failures.first.message;
+    String failureMessage = '';
+    if (failures.isNotEmpty) {
+      failureMessage = failures.first is UninitializedField ? '' : failures[0].message;
+    }
     return Container(
       padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.01),
       child: Text(
-        failures.isEmpty ? '' : failureMessage,
+        failureMessage,
         style: Fonts.headline2.copyWith(color: AppColors.error),
       ),
     );

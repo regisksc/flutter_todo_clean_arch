@@ -37,7 +37,7 @@ class _AuthPageState extends State<AuthPage> {
                     enable: controller.readyToProceed,
                     label: controller.actionTitle,
                     displayLoading: controller.pageState == PageState.loading,
-                    onTap: () => controller.handleActionTap(),
+                    onTap: () => controller.handleActionTap(context),
                   ),
                 ),
                 const Spacer(),

@@ -1,7 +1,15 @@
+import 'dart:async';
+
 import 'package:features/features.dart';
+import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
 import 'package:infra/exports/dependencies.dart';
 import 'package:infra/infra.dart';
 import 'package:mobx/mobx.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+
+import '../../../presentation.dart';
 
 part 'auth_controller.g.dart';
 
@@ -11,15 +19,20 @@ typedef FieldFailure = ValueFailure<String>;
 
 class AuthController = AuthControllerBase with _$AuthController;
 
-abstract class AuthControllerBase with Store {
+abstract class AuthControllerBase with Store, Navigation, DialogManager {
   final animDuration = const Duration(milliseconds: 400);
   @observable
   SignState signState = SignState.isSignIn;
   @observable
   PageState pageState = PageState.idle;
   @action
-  void changeSignState() =>
-      signState == SignState.isSignIn ? signState = SignState.isSignUp : signState = SignState.isSignIn;
+  void changeSignState() {
+    passwordController.clear();
+    confirmPasswordController.clear();
+    password = Password();
+    confirmPassword = Password();
+    signState == SignState.isSignIn ? signState = SignState.isSignUp : signState = SignState.isSignIn;
+  }
 
   @observable
   Email email = Email();
@@ -28,53 +41,71 @@ abstract class AuthControllerBase with Store {
 
   @observable
   Password password = Password();
+  final passwordController = TextEditingController();
   void setPassword(String input) => password = Password(input);
   bool get invalidPassword => password.isInvalid && password.get is! UninitializedField;
 
   @observable
   Password confirmPassword = Password();
+  final confirmPasswordController = TextEditingController();
   void setConfirmPassword(String input) => confirmPassword = Password(input);
   bool get invalidConfirmPassword => confirmPassword.isInvalid && confirmPassword.get is! UninitializedField;
 
   @observable
-  String? name;
+  String name = '';
   void setName(String input) => name = input;
+  bool get nameIsValid {
+    if (signState == SignState.isSignUp) return name != '';
+    return true;
+  }
 
   @computed
   List<ValueFailure> get failures {
     final failures = <FieldFailure>[];
     if (email.isInvalid) failures.add(email.get as FieldFailure);
     if (password.isInvalid) failures.add(password.get as FieldFailure);
-    if (password != confirmPassword) failures.add(NonMatchingPasswords());
+    if (signState == SignState.isSignUp && password != confirmPassword) failures.add(NonMatchingPasswords());
     return failures;
   }
 
-  // bool get everythingIsFilled =>
   @computed
-  bool get readyToProceed => failures.isEmpty;
+  bool get readyToProceed => failures.isEmpty && nameIsValid;
 
   @computed
   String get actionTitle => signState == SignState.isSignIn ? 'Login' : 'Register';
 
-  void handleActionTap() {
+  void handleActionTap(BuildContext context) {
     if (readyToProceed) {
       switch (signState) {
         case SignState.isSignIn:
-          _login();
+          _login(context);
           break;
         case SignState.isSignUp:
-          _register();
+          _register(context);
           break;
       }
     }
   }
 
-  Future<void> _login() async {
+  Future _login(BuildContext context) async {
     final usecase = Modular.get<LogUserInUsecase>();
     pageState = PageState.loading;
     final login = await usecase(LogUserInParams(email: email, password: password));
     pageState = PageState.idle;
+    login.when(
+      (error) => showDialogWithText(context, error.description),
+      (success) => navigateTo('inProgress', args: success, clearRouteStack: true),
+    );
   }
 
-  void _register() {}
+  Future _register(BuildContext context) async {
+    final usecase = Modular.get<RegisterUserUsecase>();
+    pageState = PageState.loading;
+    final register = await usecase(RegisterUserParams(email: email, password: password, name: name));
+    pageState = PageState.idle;
+    register.when(
+      (error) => showDialogWithText(context, error.description),
+      (success) => navigateTo('inProgress', args: success, clearRouteStack: true),
+    );
+  }
 }

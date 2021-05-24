@@ -7,8 +7,8 @@ class LogUserInUsecase extends Usecase<UserEntity, LogUserInParams> {
   final AuthRepository repository;
   LogUserInUsecase(this.repository);
   @override
-  Future<Result<Failure, UserEntity>> call(LogUserInParams params) {
-    final result = repository.logUserIn(email: params.email, password: params.password);
+  Future<Result<Failure, UserEntity>> call(LogUserInParams params) async {
+    final result = await repository.logUserIn(email: params.email, password: params.password);
     return result;
   }
 }

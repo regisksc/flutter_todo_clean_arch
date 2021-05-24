@@ -28,14 +28,18 @@ class AuthPageFields extends StatelessWidget {
               ),
               SizedBox(height: pageSize.height * 0.03),
               FieldWidget(
+                controller: controller.passwordController,
                 hintText: 'password',
+                obscureField: true,
                 onChanged: controller.setPassword,
                 hasError: controller.password.isInvalid && controller.password.get is! UninitializedField,
               ),
               SizedBox(height: pageSize.height * 0.03),
               _signUpField(FieldWidget(
+                controller: controller.confirmPasswordController,
                 hintText: 'confirm password',
                 onChanged: controller.setConfirmPassword,
+                obscureField: true,
                 hasError: controller.confirmPassword.isInvalid && controller.confirmPassword.get is! UninitializedField,
               )),
               FieldErrorPlaceholder(failures: controller.failures),
@@ -46,12 +50,16 @@ class AuthPageFields extends StatelessWidget {
     );
   }
 
-  AnimatedContainer _signUpField(FieldWidget field) {
-    return AnimatedContainer(
+  AnimatedOpacity _signUpField(FieldWidget field) {
+    return AnimatedOpacity(
       duration: controller.animDuration,
-      height: !isSignIn ? oneFieldSpace : 0,
-      child: Column(
-        children: [field, SizedBox(height: pageSize.height * 0.03)],
+      opacity: !isSignIn ? 1 : 0,
+      child: AnimatedContainer(
+        duration: controller.animDuration,
+        height: !isSignIn ? oneFieldSpace : 0,
+        child: Column(
+          children: [field, SizedBox(height: pageSize.height * 0.03)],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:features/features.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:infra/exports/dependencies.dart';
 
@@ -13,10 +14,24 @@ class AuthModule extends Module {
             (i) => FirebaseAuthDatasource(store: FirebaseFirestore.instance, auth: FirebaseAuth.instance)),
         Bind.lazySingleton<ConcreteAuthRepository>((i) => ConcreteAuthRepository(i.get<AuthDataSource>())),
         Bind.lazySingleton<LogUserInUsecase>((i) => LogUserInUsecase(i.get<AuthRepository>())),
+        Bind.lazySingleton<RegisterUserUsecase>((i) => RegisterUserUsecase(i.get<AuthRepository>())),
       ];
 
   @override
   List<ModularRoute> get routes => [
         ChildRoute(Modular.initialRoute, child: (_, args) => AuthPage()),
+        ChildRoute(
+          'inProgress',
+          child: (_, args) => Scaffold(
+            body: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(70),
+              child: const Text(
+                'You logged in, but app is under construction. Sorry for the inconvenience',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
       ];
 }

@@ -6,7 +6,6 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         title: 'Flutter Clean Architecture toDo App',
         debugShowCheckedModeBanner: false,
-        // builder: (context, child) => child!.responsive(context),
         initialRoute: '/auth',
       ).modular();
 }

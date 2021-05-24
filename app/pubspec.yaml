@@ -30,6 +30,7 @@ environment:
   sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
+  flash: ^2.0.0
   firebase_core: ^1.2.0
   get: ^4.1.4
   presentation:

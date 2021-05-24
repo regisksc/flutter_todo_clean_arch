@@ -110,13 +110,13 @@ mixin _$AuthController on AuthControllerBase, Store {
   final _$nameAtom = Atom(name: 'AuthControllerBase.name');
 
   @override
-  String? get name {
+  String get name {
     _$nameAtom.reportRead();
     return super.name;
   }
 
   @override
-  set name(String? value) {
+  set name(String value) {
     _$nameAtom.reportWrite(value, super.name, () {
       super.name = value;
     });
