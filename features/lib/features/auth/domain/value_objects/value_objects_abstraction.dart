@@ -10,7 +10,8 @@ abstract class ValueObject<T> extends Equatable implements Validatable {
   Result<ValueFailure<T>, T>? get value;
 
   T getOrElse(T defaultValue) {
-    final content = value != null && value!.get();
+    late final content;
+    if (value != null) content = value!.get();
     if (isValid) return content as T;
     return defaultValue;
   }
