@@ -1,5 +1,4 @@
 import 'package:features/features/auth/data/error/auth_firebase_errors.dart';
-import 'package:flutter/services.dart';
 import 'package:infra/infra.dart';
 
 import '../../auth.dart';
@@ -11,19 +10,36 @@ class FirebaseAuthDatasource implements AuthDataSource {
 
   @override
   Future<Result<Failure, UserModel>> login({required Email email, required Password password}) async {
-    final signInCall = auth.signInWithEmailAndPassword(
-      email: email.get,
-      password: password.get,
-    );
-    return signInCall.then(
-      (user) => Success(
-        UserModel(
-          userId: UuidFactory.newUuid,
-          email: user.user!.email,
-          name: user.additionalUserInfo?.username,
-        ),
-      ),
-    );
+    try {
+      final signInCall = auth.signInWithEmailAndPassword(
+        email: email.get,
+        password: password.get,
+      );
+      final result = await signInCall;
+      return Success(UserModel(
+        userId: null,
+        email: email.get,
+        name: result.additionalUserInfo?.username,
+      ));
+    } on FirebaseAuthException catch (e) {
+      return Error(FirebaseAuthFailure(e.message));
+    }
+  }
+
+  @override
+  Future<UserId> retrieveUserId(Email email) async {
+    final collection = store.collection('users');
+    final data = await collection.get();
+    final documents = data.docs;
+    late final UserId userId;
+    try {
+      bool matchesEmail(Map<String, dynamic> doc) => doc['email'] == email.get;
+      final document = documents.map((e) => Map<String, dynamic>.from(e.data())).firstWhere(matchesEmail);
+      userId = UserId(input: document['userId']);
+    } on StateError {
+      userId = UserId.fresh();
+    }
+    return userId;
   }
 
   @override
@@ -46,12 +62,8 @@ class FirebaseAuthDatasource implements AuthDataSource {
           ),
         ),
       );
-    } on PlatformException catch (e) {
-      print(e);
-      return Error(FirebaseAuthFailure());
-    } catch (e) {
-      print(e);
-      return Error(FirebaseAuthFailure());
+    } on FirebaseAuthException catch (e) {
+      return Error(FirebaseAuthFailure(e.message));
     }
   }
 

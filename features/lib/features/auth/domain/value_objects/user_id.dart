@@ -7,6 +7,7 @@ class UserId extends ValueObject<String> {
   @override
   final Result<ValueFailure<String>, String> value;
 
+  factory UserId.fresh() => UserId._(Success(UuidFactory.newUuid));
   factory UserId({String? input}) {
     if (input == null) return UserId._(Success(UuidFactory.newUuid));
     try {

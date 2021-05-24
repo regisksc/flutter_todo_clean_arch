@@ -17,7 +17,14 @@ class ConcreteAuthRepository implements AuthRepository {
     }
     return user.when(
       (error) => Error(error),
-      (success) => Success(success.toEntity),
+      (model) async {
+        final userId = await datasource.retrieveUserId(email);
+        return Success(UserEntity(
+          userId: userId,
+          name: model.name!,
+          email: Email(model.email),
+        ));
+      },
     );
   }
 

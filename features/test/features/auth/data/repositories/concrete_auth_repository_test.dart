@@ -30,11 +30,13 @@ main() {
     () async {
       // arrange
       when(() => datasource.login(email: email, password: password)).thenAnswer((_) async => Success(model));
+      when(() => datasource.retrieveUserId(email)).thenAnswer((_) async => UserId.fresh());
       // act
       final login = await sut.logUserIn(email: email, password: password);
       final result = login.get();
       // assert
       verify(() => datasource.login(email: email, password: password));
+      verify(() => datasource.retrieveUserId(email));
       expect(result, isA<UserEntity>());
       verifyNoMoreInteractions(datasource);
     },

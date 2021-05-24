@@ -17,4 +17,6 @@ abstract class AuthDataSource {
     required Email email,
     required Password password,
   });
+
+  Future<UserId> retrieveUserId(Email email);
 }
