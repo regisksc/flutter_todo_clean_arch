@@ -26,9 +26,18 @@ class AuthModule extends Module {
             body: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(70),
-              child: const Text(
-                'You logged in, but app is under construction. Sorry for the inconvenience',
-                textAlign: TextAlign.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    "Hi ${(args.data as UserEntity).name}! You logged in with ${(args.data as UserEntity).email.get}",
+                    textAlign: TextAlign.center,
+                  ),
+                  const Text(
+                    'You logged in, but app is under construction. Sorry for the inconvenience',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
           ),

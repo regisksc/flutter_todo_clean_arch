@@ -71,13 +71,15 @@ class FirebaseAuthDatasource implements AuthDataSource {
         password: password.get,
       );
       return signUpCall.then(
-        (user) => Success(
-          UserModel(
-            userId: UuidFactory.newUuid,
+        (user) {
+          final model = UserModel(
+            userId: UserId.fresh().get,
             email: email.get,
-            name: user.additionalUserInfo?.username,
-          ),
-        ),
+            name: name,
+          );
+          saveUserDataAfterRegistering(user: model);
+          return Success(model);
+        },
       );
     } on FirebaseAuthException catch (e) {
       return Error(FirebaseAuthFailure(e.message));
