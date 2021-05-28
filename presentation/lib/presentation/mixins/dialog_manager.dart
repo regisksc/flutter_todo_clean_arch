@@ -15,7 +15,6 @@ mixin DialogManager {
 
 Widget _content(BuildContext context, String message) {
   final height = MediaQuery.of(context).size.height;
-  final width = MediaQuery.of(context).size.width;
   return Container(
     padding: EdgeInsets.symmetric(vertical: height * 0.03),
     child: Text(

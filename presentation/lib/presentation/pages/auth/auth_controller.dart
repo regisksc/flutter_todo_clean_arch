@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:features/features.dart';
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
 import 'package:infra/exports/dependencies.dart';
 import 'package:infra/infra.dart';
 import 'package:mobx/mobx.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 
 import '../../../presentation.dart';
 
