@@ -19,4 +19,5 @@ abstract class AuthDataSource {
   });
 
   Future<UserId> retrieveUserId(Email email);
+  Future<String> retrieveUserName(Email email);
 }

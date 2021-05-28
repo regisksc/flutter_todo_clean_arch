@@ -11,21 +11,22 @@ class ConcreteAuthRepository implements AuthRepository {
     late Result<Failure, UserModel> user;
     try {
       user = await datasource.login(email: email, password: password);
+      return user.when(
+        (error) => Error(error),
+        (model) async {
+          final userId = await datasource.retrieveUserId(email);
+          final name = await datasource.retrieveUserName(email);
+          return Success(UserEntity(
+            userId: userId,
+            name: name,
+            email: Email(model.email),
+          ));
+        },
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') return Error(UserNotFoundFailure());
       return Error(FirebaseAuthFailure());
     }
-    return user.when(
-      (error) => Error(error),
-      (model) async {
-        final userId = await datasource.retrieveUserId(email);
-        return Success(UserEntity(
-          userId: userId,
-          name: model.name!,
-          email: Email(model.email),
-        ));
-      },
-    );
   }
 
   @override

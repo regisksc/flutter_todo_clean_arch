@@ -1,7 +1,7 @@
-import 'package:features/features/auth/data/error/auth_firebase_errors.dart';
 import 'package:infra/infra.dart';
 
 import '../../auth.dart';
+import '../error/auth_firebase_errors.dart';
 
 class FirebaseAuthDatasource implements AuthDataSource {
   final FirebaseAuth auth;
@@ -16,11 +16,12 @@ class FirebaseAuthDatasource implements AuthDataSource {
         password: password.get,
       );
       final result = await signInCall;
-      return Success(UserModel(
+      final model = UserModel(
         userId: null,
         email: email.get,
         name: result.additionalUserInfo?.username,
-      ));
+      );
+      return Success(model);
     } on FirebaseAuthException catch (e) {
       return Error(FirebaseAuthFailure(e.message));
     }
@@ -40,6 +41,22 @@ class FirebaseAuthDatasource implements AuthDataSource {
       userId = UserId.fresh();
     }
     return userId;
+  }
+
+  @override
+  Future<String> retrieveUserName(Email email) async {
+    final collection = store.collection('users');
+    final data = await collection.get();
+    final documents = data.docs;
+    late final String userName;
+    try {
+      bool matchesEmail(Map<String, dynamic> doc) => doc['email'] == email.get;
+      final document = documents.map((e) => Map<String, dynamic>.from(e.data())).firstWhere(matchesEmail);
+      userName = document['name'].toString();
+      return userName;
+    } on StateError {
+      return '';
+    }
   }
 
   @override

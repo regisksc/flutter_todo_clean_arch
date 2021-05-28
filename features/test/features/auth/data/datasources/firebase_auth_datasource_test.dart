@@ -115,6 +115,29 @@ void main() {
         verifyNoMoreInteractions(store);
       },
     );
+
+    test(
+      "should retrieve user's name after login",
+      () async {
+        // arrange
+        final map = Map<String, dynamic>.from({'userId': UuidFactory.newUuid, 'email': email.get, 'name': name});
+        when(() => store.collection('users')).thenReturn(collection);
+        when(() => collection.get()).thenAnswer((_) async => querySnapshot);
+        when(() => querySnapshot.docs).thenReturn(documents);
+        when(() => documents.map(any())).thenReturn(jsonList);
+        when(() => jsonList.firstWhere(any())).thenReturn(map);
+        // act
+        final result = await sut.retrieveUserName(email);
+        // assert
+        verify(() => store.collection('users'));
+        verify(() => collection.get());
+        verify(() => querySnapshot.docs);
+        verify(() => documents.map(any()));
+        verify(() => jsonList.firstWhere(any()));
+        expect(result, equals(map['name']));
+        verifyNoMoreInteractions(store);
+      },
+    );
   });
 
   group('sign up', () {
