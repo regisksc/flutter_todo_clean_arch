@@ -76,32 +76,21 @@ abstract class AuthControllerBase with Store, Navigation, DialogManager {
     if (readyToProceed) {
       switch (signState) {
         case SignState.isSignIn:
-          _login(context);
+          _auth<LogUserInUsecase>(context, LogUserInParams(email: email, password: password));
           break;
         case SignState.isSignUp:
-          _register(context);
+          _auth<RegisterUserUsecase>(context, RegisterUserParams(email: email, password: password, name: name));
           break;
       }
     }
   }
 
-  Future _login(BuildContext context) async {
-    final usecase = Modular.get<LogUserInUsecase>();
+  Future _auth<T extends Usecase>(BuildContext context, params) async {
+    final usecase = Modular.get<T>();
     pageState = PageState.loading;
-    final login = await usecase(LogUserInParams(email: email, password: password));
+    final login = await usecase(params);
     pageState = PageState.idle;
     login.when(
-      (error) => showDialogWithText(context, error.description),
-      (success) => navigateTo('inProgress', args: success, clearRouteStack: true),
-    );
-  }
-
-  Future _register(BuildContext context) async {
-    final usecase = Modular.get<RegisterUserUsecase>();
-    pageState = PageState.loading;
-    final register = await usecase(RegisterUserParams(email: email, password: password, name: name));
-    pageState = PageState.idle;
-    register.when(
       (error) => showDialogWithText(context, error.description),
       (success) => navigateTo('inProgress', args: success, clearRouteStack: true),
     );
